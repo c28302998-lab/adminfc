@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useApp } from '../context/AppContext';
-import { X, Plus, Trash2, Newspaper, Video, Users, Handshake, Lock, Key, LogOut, ShieldCheck, Eye, EyeOff, Settings, UserCircle, Image as ImageIcon } from 'lucide-react';
+import { X, Plus, Trash2, Newspaper, Video, Users, Handshake, Lock, Key, LogOut, ShieldCheck, Eye, EyeOff, Settings, UserCircle, Image as ImageIcon, Globe } from 'lucide-react';
 
 export default function AdminPanelModal() {
   const { 
@@ -42,6 +42,53 @@ export default function AdminPanelModal() {
     customTranslations,
     setCustomTranslations
   } = useApp();
+
+  const [adminLang, setAdminLang] = useState('ru');
+  const adminT = {
+    ru: {
+      loginTitle: 'Вход в панель CMS',
+      loginSubtitle: 'Football Challenge Administrative Access',
+      wrongPwd: 'Неверный пароль. Попробуйте еще раз.',
+      pwdPlaceholder: 'Введите пароль администратора',
+      loginBtn: 'Войти',
+      title: 'ПАНЕЛЬ АДМИНИСТРАТОРА (CMS)',
+      logout: 'Выйти',
+      changePwd: 'Сменить пароль',
+      tabSponsors: 'Заявки спонсоров',
+      tabNews: 'Новости',
+      tabRosters: 'Составы',
+      tabMedia: 'Медиа',
+      tabSettings: 'Настройки сайта',
+      tabTexts: 'Тексты (JSON)',
+      tabDesign: 'Дизайн',
+      tabCoaches: 'Тренеры',
+      tabPartners: 'Партнеры',
+      tabTrials: 'Заявки на просмотр',
+      langBtn: 'Polski'
+    },
+    pl: {
+      loginTitle: 'Logowanie do panelu CMS',
+      loginSubtitle: 'Football Challenge Administrative Access',
+      wrongPwd: 'Złe hasło. Spróbuj ponownie.',
+      pwdPlaceholder: 'Wprowadź hasło administratora',
+      loginBtn: 'Zaloguj się',
+      title: 'PANEL ADMINISTRATORA (CMS)',
+      logout: 'Wyloguj',
+      changePwd: 'Zmień hasło',
+      tabSponsors: 'Zgłoszenia sponsorów',
+      tabNews: 'Aktualności',
+      tabRosters: 'Składy',
+      tabMedia: 'Media',
+      tabSettings: 'Ustawienia',
+      tabTexts: 'Teksty (JSON)',
+      tabDesign: 'Wygląd',
+      tabCoaches: 'Trenerzy',
+      tabPartners: 'Partnerzy',
+      tabTrials: 'Zgłoszenia na testy',
+      langBtn: 'Русский'
+    }
+  };
+  const tA = adminT[adminLang];
 
   const [passwordInput, setPasswordInput] = useState('');
   const [showPassword, setShowPassword] = useState(false);
@@ -304,17 +351,25 @@ export default function AdminPanelModal() {
                   </span>
                 </div>
                 <h2 className="text-2xl font-black text-white uppercase mt-2">
-                  {t.admin.title}
+                  {tA.title}
                 </h2>
               </div>
 
-              <div className="flex items-center gap-2">
+              <div className="flex flex-wrap items-center gap-2">
+                <button
+                  onClick={() => setAdminLang(adminLang === 'ru' ? 'pl' : 'ru')}
+                  className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-neutral-900 hover:bg-neutral-800 text-xs font-bold text-gray-300 border border-emerald-500/50"
+                >
+                  <Globe className="w-3.5 h-3.5 text-emerald-400" />
+                  <span>{tA.langBtn}</span>
+                </button>
+
                 <button
                   onClick={() => setShowChangePwd(!showChangePwd)}
                   className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-neutral-900 hover:bg-neutral-800 text-xs font-semibold text-gray-300 border border-neutral-800"
                 >
                   <Key className="w-3.5 h-3.5 text-emerald-400" />
-                  <span>Сменить пароль</span>
+                  <span>{tA.changePwd}</span>
                 </button>
 
                 <button
@@ -322,7 +377,7 @@ export default function AdminPanelModal() {
                   className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-red-950/60 hover:bg-red-900/80 text-xs font-semibold text-red-300 border border-red-900/40"
                 >
                   <LogOut className="w-3.5 h-3.5" />
-                  <span>Выйти</span>
+                  <span>{tA.logout}</span>
                 </button>
               </div>
             </div>
@@ -356,7 +411,7 @@ export default function AdminPanelModal() {
                 }`}
               >
                 <Newspaper className="w-4 h-4" />
-                <span>{t.admin.tabNews}</span>
+                <span>{tA.tabNews}</span>
               </button>
 
               <button
@@ -366,7 +421,7 @@ export default function AdminPanelModal() {
                 }`}
               >
                 <Video className="w-4 h-4" />
-                <span>{t.admin.tabMedia}</span>
+                <span>{tA.tabMedia}</span>
               </button>
 
               <button
@@ -376,7 +431,7 @@ export default function AdminPanelModal() {
                 }`}
               >
                 <Users className="w-4 h-4" />
-                <span>{t.admin.tabApplications} ({trialApplications.length})</span>
+                <span>{tA.tabTrials} ({trialApplications.length})</span>
               </button>
 
               <button
@@ -386,7 +441,7 @@ export default function AdminPanelModal() {
                 }`}
               >
                 <Handshake className="w-4 h-4" />
-                <span>{t.admin.tabSponsorsReq} ({sponsorApplications.length})</span>
+                <span>{tA.tabSponsors} ({sponsorApplications.length})</span>
               </button>
 
               <button
@@ -396,7 +451,7 @@ export default function AdminPanelModal() {
                 }`}
               >
                 <UserCircle className="w-4 h-4" />
-                <span>Составы</span>
+                <span>{tA.tabRosters}</span>
               </button>
 
               <button
@@ -406,7 +461,7 @@ export default function AdminPanelModal() {
                 }`}
               >
                 <Settings className="w-4 h-4" />
-                <span>Настройки сайта</span>
+                <span>{tA.tabSettings}</span>
               </button>
               
               <button
@@ -416,7 +471,7 @@ export default function AdminPanelModal() {
                 }`}
               >
                 <ShieldCheck className="w-4 h-4" />
-                <span>Тренеры</span>
+                <span>{tA.tabCoaches}</span>
               </button>
 
               <button
@@ -426,7 +481,7 @@ export default function AdminPanelModal() {
                 }`}
               >
                 <Handshake className="w-4 h-4" />
-                <span>Партнеры</span>
+                <span>{tA.tabPartners}</span>
               </button>
 
               <button
@@ -436,7 +491,7 @@ export default function AdminPanelModal() {
                 }`}
               >
                 <ImageIcon className="w-4 h-4" />
-                <span>Дизайн</span>
+                <span>{tA.tabDesign}</span>
               </button>
 
               <button
@@ -446,7 +501,7 @@ export default function AdminPanelModal() {
                 }`}
               >
                 <Newspaper className="w-4 h-4" />
-                <span>Тексты (JSON)</span>
+                <span>{tA.tabTexts}</span>
               </button>
             </div>
 
