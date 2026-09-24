@@ -1087,14 +1087,70 @@ export default function AdminPanelModal() {
                     <div>
                       <label className="block text-xs font-semibold text-gray-400 uppercase mb-1">Заголовок Истории</label>
                       <input type="text" value={formSettings.historyTitle || ''} onChange={e => setFormSettings({...formSettings, historyTitle: e.target.value})} className="w-full bg-neutral-900 border border-neutral-800 rounded-xl px-4 py-2.5 text-sm text-white focus:outline-none focus:border-emerald-500" />
-                      <label className="block text-xs font-semibold text-gray-400 uppercase mt-4 mb-1">Текст Истории</label>
-                      <textarea rows="4" value={formSettings.historyText || ''} onChange={e => setFormSettings({...formSettings, historyText: e.target.value})} className="w-full bg-neutral-900 border border-neutral-800 rounded-xl px-4 py-2.5 text-sm text-white focus:outline-none focus:border-emerald-500" />
+                      <label className="block text-xs font-semibold text-gray-400 uppercase mt-4 mb-1">Текст Истории (Формат: Год - Заголовок - Описание)</label>
+                      <textarea rows="4" value={formSettings.historyText || ''} onChange={e => setFormSettings({...formSettings, historyText: e.target.value})} placeholder="2022 - Основание - Открытие академии..." className="w-full bg-neutral-900 border border-neutral-800 rounded-xl px-4 py-2.5 text-sm text-white focus:outline-none focus:border-emerald-500" />
                     </div>
                     <div>
                       <label className="block text-xs font-semibold text-gray-400 uppercase mb-1">Заголовок Миссии</label>
                       <input type="text" value={formSettings.missionTitle || ''} onChange={e => setFormSettings({...formSettings, missionTitle: e.target.value})} className="w-full bg-neutral-900 border border-neutral-800 rounded-xl px-4 py-2.5 text-sm text-white focus:outline-none focus:border-emerald-500" />
-                      <label className="block text-xs font-semibold text-gray-400 uppercase mt-4 mb-1">Текст Миссии</label>
-                      <textarea rows="4" value={formSettings.missionText || ''} onChange={e => setFormSettings({...formSettings, missionText: e.target.value})} className="w-full bg-neutral-900 border border-neutral-800 rounded-xl px-4 py-2.5 text-sm text-white focus:outline-none focus:border-emerald-500" />
+                      <label className="block text-xs font-semibold text-gray-400 uppercase mt-4 mb-1">Пункты Миссии (Каждый с новой строки)</label>
+                      <textarea rows="4" value={formSettings.missionText || ''} onChange={e => setFormSettings({...formSettings, missionText: e.target.value})} placeholder="Дисциплина и уважение&#10;Профессиональный рост" className="w-full bg-neutral-900 border border-neutral-800 rounded-xl px-4 py-2.5 text-sm text-white focus:outline-none focus:border-emerald-500" />
+                    </div>
+                  </div>
+                </div>
+
+                <div className="bg-neutral-950 p-6 rounded-2xl border border-neutral-800 space-y-4">
+                  <h3 className="text-sm font-bold text-white uppercase text-emerald-400 mb-4 border-b border-neutral-800 pb-2">Ближайший Матч</h3>
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div>
+                      <label className="block text-xs font-semibold text-gray-400 uppercase mb-1">Название турнира (Лига)</label>
+                      <input type="text" value={formSettings.nextMatchLeague || ''} onChange={e => setFormSettings({...formSettings, nextMatchLeague: e.target.value})} placeholder="Зимний Кубок" className="w-full bg-neutral-900 border border-neutral-800 rounded-xl px-4 py-2.5 text-sm text-white focus:outline-none focus:border-emerald-500" />
+                    </div>
+                    <div>
+                      <label className="block text-xs font-semibold text-gray-400 uppercase mb-1">Дата и Время</label>
+                      <input type="datetime-local" value={formSettings.nextMatchDate || ''} onChange={e => setFormSettings({...formSettings, nextMatchDate: e.target.value})} className="w-full bg-neutral-900 border border-neutral-800 rounded-xl px-4 py-2.5 text-sm text-white focus:outline-none focus:border-emerald-500" />
+                    </div>
+                    <div>
+                      <label className="block text-xs font-semibold text-gray-400 uppercase mb-1">Команда 1 (Ваша)</label>
+                      <input type="text" value={formSettings.nextMatchTeam1 || ''} onChange={e => setFormSettings({...formSettings, nextMatchTeam1: e.target.value})} placeholder="Академия ФК" className="w-full bg-neutral-900 border border-neutral-800 rounded-xl px-4 py-2.5 text-sm text-white focus:outline-none focus:border-emerald-500" />
+                    </div>
+                    <div>
+                      <label className="block text-xs font-semibold text-gray-400 uppercase mb-1">Логотип Команды 1</label>
+                      <div className="flex flex-col gap-2">
+                        <input type="text" value={formSettings.nextMatchTeam1Logo || ''} onChange={e => setFormSettings({...formSettings, nextMatchTeam1Logo: e.target.value})} placeholder="URL логотипа..." className="w-full bg-neutral-900 border border-neutral-800 rounded-xl px-4 py-2.5 text-sm text-white focus:outline-none focus:border-emerald-500" />
+                        <div className="flex items-center gap-2">
+                          <span className="text-xs font-bold text-gray-600">ИЛИ</span>
+                          <input type="file" accept="image/*" onChange={(e) => handleImageUpload(e, (base64) => setFormSettings({...formSettings, nextMatchTeam1Logo: base64}))} className="w-full bg-neutral-900 border border-neutral-800 rounded-xl px-4 py-2.5 text-sm text-gray-400 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-xs file:font-semibold file:bg-emerald-900 file:text-emerald-300 hover:file:bg-emerald-800" />
+                        </div>
+                      </div>
+                    </div>
+                    <div>
+                      <label className="block text-xs font-semibold text-gray-400 uppercase mb-1">Команда 2 (Соперник)</label>
+                      <input type="text" value={formSettings.nextMatchTeam2 || ''} onChange={e => setFormSettings({...formSettings, nextMatchTeam2: e.target.value})} placeholder="FC Rival" className="w-full bg-neutral-900 border border-neutral-800 rounded-xl px-4 py-2.5 text-sm text-white focus:outline-none focus:border-emerald-500" />
+                    </div>
+                    <div>
+                      <label className="block text-xs font-semibold text-gray-400 uppercase mb-1">Логотип Команды 2</label>
+                      <div className="flex flex-col gap-2">
+                        <input type="text" value={formSettings.nextMatchTeam2Logo || ''} onChange={e => setFormSettings({...formSettings, nextMatchTeam2Logo: e.target.value})} placeholder="URL логотипа..." className="w-full bg-neutral-900 border border-neutral-800 rounded-xl px-4 py-2.5 text-sm text-white focus:outline-none focus:border-emerald-500" />
+                        <div className="flex items-center gap-2">
+                          <span className="text-xs font-bold text-gray-600">ИЛИ</span>
+                          <input type="file" accept="image/*" onChange={(e) => handleImageUpload(e, (base64) => setFormSettings({...formSettings, nextMatchTeam2Logo: base64}))} className="w-full bg-neutral-900 border border-neutral-800 rounded-xl px-4 py-2.5 text-sm text-gray-400 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-xs file:font-semibold file:bg-emerald-900 file:text-emerald-300 hover:file:bg-emerald-800" />
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="bg-neutral-950 p-6 rounded-2xl border border-neutral-800 space-y-4">
+                  <h3 className="text-sm font-bold text-white uppercase text-emerald-400 mb-4 border-b border-neutral-800 pb-2">Турнирная Таблица</h3>
+                  <div>
+                    <label className="block text-xs font-semibold text-gray-400 uppercase mb-1 flex items-center gap-2"><ImageIcon className="w-4 h-4"/> Изображение таблицы (URL или файл)</label>
+                    <div className="flex flex-col gap-2">
+                      <input type="text" value={formSettings.leagueTableImage || ''} onChange={e => setFormSettings({...formSettings, leagueTableImage: e.target.value})} placeholder="URL картинки..." className="w-full bg-neutral-900 border border-neutral-800 rounded-xl px-4 py-2.5 text-sm text-white focus:outline-none focus:border-emerald-500" />
+                      <div className="flex items-center gap-2">
+                        <span className="text-xs font-bold text-gray-600">ИЛИ</span>
+                        <input type="file" accept="image/*" onChange={(e) => handleImageUpload(e, (base64) => setFormSettings({...formSettings, leagueTableImage: base64}))} className="w-full bg-neutral-900 border border-neutral-800 rounded-xl px-4 py-2.5 text-sm text-gray-400 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-xs file:font-semibold file:bg-emerald-900 file:text-emerald-300 hover:file:bg-emerald-800" />
+                      </div>
                     </div>
                   </div>
                 </div>
